@@ -1,0 +1,41 @@
+//reducer
+const counter = (state=0, action) => {
+  switch (action.type) {
+    case 'INCREMENT' : return state+1;
+    case 'DECRIMENT' : return state-1;
+    default : return state;
+  }
+}
+
+const Counter = ({value,onIncrement,onDecrement}) => (
+ <div>
+  <h1>{value}</h1>
+  <button onClick={onIncrement}>+</button>
+  <button onClick={onDecrement}>-</button>
+ </div>
+);
+
+const {createStore} = Redux;
+const store = createStore(counter);
+
+const render = () => {
+ ReactDOM.render(
+   <Counter 
+   value={store.getState()} 
+   onIncrement = {() =>
+                 store.dispatch({
+                    type:'INCREMENT'
+                  })} 
+    onDecrement = {() =>
+                 store.dispatch({
+                    type:'DECRIMENT'
+                  })} 
+    />,
+   document.getElementById('root')
+ );
+}
+
+render(); //show current state value
+store.subscribe(render); // this will help to use reducer
+
+
